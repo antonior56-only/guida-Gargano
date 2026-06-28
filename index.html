@@ -2517,22 +2517,27 @@ function renderEventi() {
   ];
   
   const oggi = new Date();
-  const dString = `${oggi.getFullYear()}-${String(oggi.getMonth()+1).padStart(2,'0')}-${String(oggi.getDate()).padStart(2,'0')}`;
-  
+  const mesi = ['gennaio','febbraio','marzo','aprile','maggio','giugno',
+                'luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  const idxMese = oggi.getDate() > 20 ? (oggi.getMonth() + 1) % 12 : oggi.getMonth();
+  const annoMese = (oggi.getDate() > 20 && oggi.getMonth() === 11) ? oggi.getFullYear() + 1 : oggi.getFullYear();
+  const meseTesto = mesi[idxMese] + ' ' + annoMese;
+
   const lbl = document.getElementById('eventi-date-label');
-  if(lbl) lbl.textContent = 'Risultati dal ' + oggi.toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'}) + ' in poi';
+  if(lbl) lbl.textContent = 'Eventi di ' + mesi[oggi.getMonth()] + '–' + mesi[(oggi.getMonth()+1)%12] + ' ' + oggi.getFullYear();
 
   const el2 = document.getElementById('ricerca-eventi-rapida');
   if(el2) {
     el2.innerHTML = RICERCHE_RAPIDE.map(r => {
-      const query = encodeURIComponent(r.q + ' ' + oggi.getFullYear() + ' after:' + dString);
+      const query = encodeURIComponent(r.q + ' ' + meseTesto);
       return `<a href="https://www.google.com/search?q=${query}" target="_blank" rel="noopener noreferrer"
         style="display:inline-flex;align-items:center;gap:5px;background:var(--sky);color:#fff;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap">${r.label}</a>`;
     }).join('');
   }
 
+  const dString = `${oggi.getFullYear()}-${String(oggi.getMonth()+1).padStart(2,'0')}-${String(oggi.getDate()).padStart(2,'0')}`;
   const SOCIAL_EVENTI = [
-    { nome: "Facebook", url: 'https://www.facebook.com/search/events/?q=gargano&start_date=' + dString, desc: "Tutti gli eventi pubblici.", icon: "👥" },
+    { nome: "Facebook", url: 'https://www.google.com/search?q=' + encodeURIComponent('eventi gargano ' + mesi[idxMese] + ' ' + annoMese + ' site:facebook.com'), desc: "Eventi Facebook via Google.", icon: "👥" },
     { nome: "Instagram", url: "https://www.instagram.com/explore/tags/garganoeventi/", desc: "Foto e storie in corso.", icon: "📸" },
     { nome: "Google Maps", url: "https://www.google.com/maps/search/eventi+Gargano/", desc: "Cerca eventi sulla mappa.", icon: "📍" }
   ];
@@ -2946,6 +2951,18 @@ async function richiediGuidaAI(nome, tipo, modalita) {
   const btnAudio = document.getElementById('btn-ai-audio');
   const btnTesto = document.getElementById('btn-ai-testo');
   const resultBox = document.getElementById('info-ai-result');
+
+  // Verifica API key prima di tutto
+  const activeKey = await idbGet('gargano_gemini_key');
+  if (!activeKey) {
+    const newKey = await askForApiKeyModal();
+    if (newKey && newKey.trim()) {
+      await idbSet('gargano_gemini_key', newKey.trim());
+    } else {
+      showToast('API Key necessaria per la guida AI');
+      return;
+    }
+  }
   
   if(window.speechSynthesis) window.speechSynthesis.cancel();
   
@@ -2983,8 +3000,9 @@ async function richiediGuidaAI(nome, tipo, modalita) {
   } catch (e) {
      btnAudio.innerHTML = "🎧 Ascolta"; btnAudio.disabled = false;
      btnTesto.innerHTML = "📄 Leggi"; btnTesto.disabled = false;
-     if (modalita === 'testo') resultBox.innerHTML = `<span style="color:var(--rust)">Errore di rete per la guida AI. Riprova.</span>`;
-     showToast("Errore di rete per la guida AI");
+     const msg = e.message || 'errore sconosciuto';
+     if (modalita === 'testo') resultBox.innerHTML = `<span style="color:var(--rust)">Errore guida AI: ${msg}. Riprova.</span>`;
+     showToast("Errore guida AI: " + msg);
   }
 }
 
