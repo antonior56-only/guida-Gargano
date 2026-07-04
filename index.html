@@ -2811,7 +2811,7 @@ function mostraPassaporto() {
 // ═══════════════════════════════════════════════════════════
 function toggleChat() { document.getElementById('chat-panel').classList.toggle('open'); }
 
-const apiKey = ""; 
+const apiKey = ""; // rimosso: la key viene sempre letta da IndexedDB
 
 function askForApiKeyModal() {
   return new Promise(resolve => {
@@ -2861,7 +2861,7 @@ function askForApiKeyModal() {
 }
 
 async function fetchGeminiWithRetry(payload, isJson = false, isVision = false) {
-  let activeKey = await idbGet('gargano_gemini_key') || apiKey;
+  let activeKey = await idbGet('gargano_gemini_key');
   if (isJson) {
     payload.generationConfig = {
       responseMimeType: "application/json",
