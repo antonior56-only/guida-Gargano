@@ -9,13 +9,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>if(typeof L==='undefined'){document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"><\/script>');}</script>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
 <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-
+<script>if(typeof L!=='undefined'&&typeof L.markerClusterGroup==='undefined'){document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"><\/script>');}</script>
 <style>
 :root{
   --forest:#0d4f6e; --sage:#1a7a9e; --gold:#e8a020; --cream:#f4f8fb;
@@ -434,7 +435,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
         <div id="gastro-banner" style="display:none;flex-direction:column;gap:8px;margin-bottom:10px">
           <div style="font-size:11px;font-weight:700;color:var(--stone);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">🍇 Prodotti tipici del Gargano</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px">
-            <a href="https://www.itinerarinelgusto.it/sagre-e-feste/Foggia" target="_blank" style="flex:1;min-width:130px;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#5d4037,#8d6e63);color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none;font-size:11px;font-weight:600"><span>🎪</span><div><div>Sagre e Feste</div><div style="opacity:.8;font-size:10px">itinerarinelgusto.it</div></div><span style="margin-left:auto">↗</span></a>
+            <a href="https://sagr.it/en/puglia/gargano" target="_blank" style="flex:1;min-width:130px;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#5d4037,#8d6e63);color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none;font-size:11px;font-weight:600"><span>🎪</span><div><div>Sagre e Feste</div><div style="opacity:.8;font-size:10px">sagr.it</div></div><span style="margin-left:auto">↗</span></a>
             <a href="https://www.viaggiareinpuglia.it/it/scopri-la-puglia/gastronomia" target="_blank" style="flex:1;min-width:130px;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#2e7d32,#558b2f);color:#fff;border-radius:10px;padding:8px 10px;text-decoration:none;font-size:11px;font-weight:600"><span>🌿</span><div><div>Prodotti Tipici</div><div style="opacity:.8;font-size:10px">viaggiareinpuglia.it</div></div><span style="margin-left:auto">↗</span></a>
           </div>
           <div id="gastro-stagionale" style="background:#fffbf0;border:1px solid #f0d080;border-radius:10px;padding:10px;font-size:12px;line-height:1.6"></div>
@@ -525,21 +526,6 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
           <label style="font-size:12px;font-weight:600;color:var(--stone);display:block;margin-bottom:5px">Città</label>
           <select id="filter-rest-city" onchange="filterRest()" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--text);cursor:pointer">
             <option value="tutte">📍 Tutte le città</option>
-            <option value="Cagnano Varano">Cagnano Varano</option>
-            <option value="Carpino">Carpino</option>
-            <option value="Ischitella">Ischitella</option>
-            <option value="Lesina">Lesina</option>
-            <option value="Manfredonia">Manfredonia</option>
-            <option value="Mattinata">Mattinata</option>
-            <option value="Monte Sant'Angelo">Monte Sant'Angelo</option>
-            <option value="Peschici">Peschici</option>
-            <option value="Rignano Garganico">Rignano Garganico</option>
-            <option value="Rodi Garganico">Rodi Garganico</option>
-            <option value="San Giovanni Rotondo">San Giovanni Rotondo</option>
-            <option value="San Marco in Lamis">San Marco in Lamis</option>
-            <option value="San Nicandro Garganico">San Nicandro Garganico</option>
-            <option value="Vico del Gargano">Vico del Gargano</option>
-            <option value="Vieste">Vieste</option>
           </select>
         </div>
 
@@ -587,21 +573,6 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
           <label style="font-size:12px;font-weight:600;color:var(--stone);display:block;margin-bottom:5px">Città</label>
           <select id="filter-alloggi-city" onchange="filterAlloggi()" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--text);cursor:pointer">
             <option value="tutte">📍 Tutte le città</option>
-            <option value="Cagnano Varano">Cagnano Varano</option>
-            <option value="Carpino">Carpino</option>
-            <option value="Ischitella">Ischitella</option>
-            <option value="Lesina">Lesina</option>
-            <option value="Manfredonia">Manfredonia</option>
-            <option value="Mattinata">Mattinata</option>
-            <option value="Monte Sant'Angelo">Monte Sant'Angelo</option>
-            <option value="Peschici">Peschici</option>
-            <option value="Rignano Garganico">Rignano Garganico</option>
-            <option value="Rodi Garganico">Rodi Garganico</option>
-            <option value="San Giovanni Rotondo">San Giovanni Rotondo</option>
-            <option value="San Marco in Lamis">San Marco in Lamis</option>
-            <option value="San Nicandro Garganico">San Nicandro Garganico</option>
-            <option value="Vico del Gargano">Vico del Gargano</option>
-            <option value="Vieste">Vieste</option>
           </select>
         </div>
 
@@ -859,6 +830,10 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
       <label>Descrizione</label>
       <textarea id="rist-desc" placeholder="Breve descrizione…"></textarea>
     </div>
+    <div class="form-row" style="margin-top:10px">
+      <label>Sito Web (Opzionale)</label>
+      <input type="url" id="rist-web" placeholder="https://www.nomeristorante.it"/>
+    </div>
     <div style="display:flex;gap:8px">
       <div class="form-row" style="flex:1;margin-bottom:0">
         <label>Latitudine *</label>
@@ -1106,6 +1081,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
         <option value="gemini-1.5-flash">gemini-1.5-flash</option>
         <option value="gemini-1.5-pro">gemini-1.5-pro</option>
       </select>
+      <p id="modello-attivo-info" style="font-size:11px;color:#777;margin:-4px 0 8px 2px"></p>
       <p style="font-size:12px;color:#555;margin-bottom:4px">API Key Gemini:</p>
       <div id="apikey-status-row" style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:8px 10px;background:#f5f5f5;border-radius:8px;font-size:12px">
         <span id="apikey-status-icon">⏳</span>
@@ -1169,13 +1145,26 @@ function openLuogoModal() {
   document.getElementById('luogo-modal').classList.add('open');
 }
 function openSentieroModal() {
-  ['trek-nome','trek-km','trek-h','trek-start','trek-desc','trek-lat','trek-lng','trek-gmaps-url'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  const msg=document.getElementById('trek-gmaps-msg'); if(msg) msg.textContent='';
+  // Azzera TUTTI i campi (trek-url incluso: altrimenti resta sporco fra un'apertura e l'altra)
+  ['trek-nome','trek-km','trek-h','trek-start','trek-desc','trek-url','trek-lat','trek-lng','trek-gmaps-url'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';   // null-check: niente crash se un campo manca
+  });
+  const msg = document.getElementById('trek-gmaps-msg'); if (msg) msg.textContent = '';
   aggiornaLinkGMaps('trek', 'trek-nome');
+  // Avvisa PRIMA di far compilare il form, non dopo
+  const limitReached = SENTIERI_CUSTOM.length >= 6;
+  const limitMsg = document.getElementById('sentiero-limit-msg');
+  if (limitMsg) limitMsg.style.display = limitReached ? 'block' : 'none';
+  const btn = document.querySelector('#sentiero-modal .btn-gold');
+  if (btn) {
+    btn.disabled = limitReached;
+    btn.style.opacity = limitReached ? '0.5' : '1';
+    btn.style.cursor = limitReached ? 'not-allowed' : 'pointer';
+  }
   document.getElementById('sentiero-modal').classList.add('open');
 }
 function openRistoranteModal() {
-  ['rist-nome','rist-loc','rist-cucina','rist-desc','rist-lat','rist-lng','rist-gmaps-url'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['rist-nome','rist-loc','rist-cucina','rist-desc','rist-web','rist-lat','rist-lng','rist-gmaps-url'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   const msg=document.getElementById('rist-gmaps-msg'); if(msg) msg.textContent='';
   aggiornaLinkGMaps('rist', 'rist-nome');
   document.getElementById('ristorante-modal').classList.add('open');
@@ -1201,12 +1190,13 @@ function aggiornaLinkGMaps(prefix, nomeId) {
   const nomeEl = document.getElementById(nomeId);
   const linkEl = document.getElementById(`${prefix}-gmaps-open`);
   if (!nomeEl || !linkEl) return;
-  nomeEl.addEventListener('input', () => {
+  // oninput (non addEventListener) per non accumulare listener a ogni apertura del modale
+  nomeEl.oninput = () => {
     const q = nomeEl.value.trim();
     linkEl.href = q
       ? `https://www.google.com/maps/search/${encodeURIComponent(q + ' Gargano')}`
       : (GMAPS_DEFAULT_URL[prefix] || 'https://www.google.com/maps/search/Gargano');
-  });
+  };
 }
 
 const GMAPS_FIELDS = {
@@ -1414,10 +1404,12 @@ async function importaDaGMapsAI(prefix) {
 
   let aiData = {};
   try {
+    // Qui NON usiamo getApiKeyOrAsk: l'import deve restare non bloccante e
+    // proseguire con i dati di regex/geocoding anche senza AI.
     const activeKey = await idbGet('gargano_gemini_key');
     if (!activeKey) throw new Error('Nessuna API Key');
     const model = await getGeminiModel(activeKey);
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
+    const endpoint = geminiEndpoint(model, activeKey);
     const res = await fetch(endpoint, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -1543,20 +1535,81 @@ function sanitize(str) {
   }[tag]));
 }
 
+function safeUrl(u) {
+  // Accetta SOLO http/https: blocca javascript:, data:, vbscript: e simili,
+  // che altrimenti verrebbero eseguiti al click su un link costruito da dati
+  // esterni (import AI da Google Maps, sentieri aggiunti a mano, feed RSS).
+  let s = (u || '').toString().trim();
+  if (!s) return '';
+  if (!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(s)) s = 'https://' + s.replace(/^\/+/, '');  // schema mancante -> https
+  try {
+    const p = new URL(s);
+    if (p.protocol !== 'http:' && p.protocol !== 'https:') return '';
+    return p.href;   // normalizzato: le virgolette diventano %22, niente breakout dall'attributo
+  } catch (e) { return ''; }
+}
+
+
 // ═══════════════════════════════════════════════════════════
 // GESTIONE AI: MODELLO GEMINI E API KEY
 // ═══════════════════════════════════════════════════════════
 const GEMINI_MODEL_DEFAULT = 'gemini-2.5-flash';
 const MODELLI_PREFERITI = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-1.5-flash'];
 
+// ═══════════════════════════════════════════════════════════
+// GESTIONE CENTRALIZZATA: API KEY · MODELLO · ENDPOINT
+// Unico punto di verità: evita che key, cache e URL divergano.
+// ═══════════════════════════════════════════════════════════
+
+// Se la discovery del modello fallisce (rete lenta/offline) non la riproviamo
+// a ogni chiamata: costerebbe 6s di attesa ogni volta. Si azzera al cambio di key.
+let _discoveryFallita = false;
+
+// Costruisce l'endpoint generateContent (unico punto in tutta l'app)
+function geminiEndpoint(model, key) {
+  return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+}
+
+// Cancella il modello scelto automaticamente: va fatto a OGNI cambio di key,
+// perché una key diversa può avere accesso a modelli diversi.
+async function invalidaCacheModello() {
+  await idbDelete('gargano_gemini_model_auto');
+  _discoveryFallita = false;
+}
+
+// Unico punto in cui si scrive la key: invalida sempre la cache del modello.
+async function setApiKey(nuovaKey) {
+  await idbSet('gargano_gemini_key', nuovaKey.trim());
+  await invalidaCacheModello();
+}
+
+// Ritorna la key; se manca apre la modale. null se l'utente annulla.
+async function getApiKeyOrAsk() {
+  const key = await idbGet('gargano_gemini_key');
+  if (key) return key;
+  const nuova = await askForApiKeyModal();
+  if (nuova && nuova.trim()) { await setApiKey(nuova); return nuova.trim(); }
+  return null;
+}
+
+
+// ============ Gestione chiave / modello Gemini (allineata fra i tre territori) ============
+
+
+
+
 async function getGeminiModel(activeKey) {
+  // 1. Override manuale: l'utente ha scelto un modello specifico nelle impostazioni
   const manuale = await idbGet('gargano_gemini_model');
   if (manuale && manuale !== 'auto') return manuale;
 
+  // 2. Auto-discovery già eseguita: usa il risultato memorizzato
   const auto = await idbGet('gargano_gemini_model_auto');
   if (auto) return auto;
 
-  if (activeKey) {
+  // 3. Auto-discovery: chiedi a Google la lista dei modelli disponibili sull'account.
+  //    _discoveryFallita evita di riprovare (e di attendere 6s) a ogni richiesta AI.
+  if (activeKey && !_discoveryFallita) {
     try {
       const url = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + activeKey;
       const ctrl = new AbortController();
@@ -1568,24 +1621,31 @@ async function getGeminiModel(activeKey) {
         const disponibili = (data.models || [])
           .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
           .map(m => (m.name || '').replace('models/', ''));
+        // Scegli il primo modello preferito disponibile
         for (const pref of MODELLI_PREFERITI) {
           if (disponibili.includes(pref)) {
             await idbSet('gargano_gemini_model_auto', pref);
             return pref;
           }
         }
+        // Fallback: qualsiasi modello flash disponibile
         const flash = disponibili.find(m => m.includes('flash'));
         if (flash) { await idbSet('gargano_gemini_model_auto', flash); return flash; }
       }
-    } catch(e) { /* discovery fallita, usa il default */ }
+    } catch(e) { /* rete lenta o offline */ }
+    // Discovery senza risultato: non riproviamo più in questa sessione
+    _discoveryFallita = true;
   }
+
+  // 4. Fallback sicuro
   return GEMINI_MODEL_DEFAULT;
 }
 
 async function salvaModelloGemini(val) {
   if (val === 'auto') {
+    // Resetta cache auto-discovery così verrà rifatta alla prossima chiamata
     await idbDelete('gargano_gemini_model');
-    await idbDelete('gargano_gemini_model_auto');
+    await invalidaCacheModello();
     showToast('🔄 Modalità automatica: il modello migliore verrà scelto alla prossima richiesta AI');
   } else {
     await idbSet('gargano_gemini_model', val);
@@ -1597,34 +1657,85 @@ async function apriModaleApiKey() {
   closeModal('settings-modal');
   const newKey = await askForApiKeyModal();
   if (newKey && newKey.trim() !== '') {
-    await idbSet('gargano_gemini_key', newKey.trim());
+    await setApiKey(newKey);   // invalida anche la cache del modello automatico
     showToast('✅ API Key salvata!');
   }
 }
 
 async function apriImpostazioni() {
-  const manuale = await idbGet('gargano_gemini_model');
+  // Il modale si apre subito: le verifiche di rete non devono ritardarne la comparsa
+  document.getElementById('settings-modal').classList.add('open');
+
+  // 1. Precompila il select con il modello scelto ('auto' se nessun override manuale)
+  let manuale = null;
+  try { manuale = await idbGet('gargano_gemini_model'); } catch(e) {}
   const sel = document.getElementById('select-gemini-model');
   if (sel) sel.value = (manuale && manuale !== 'auto') ? manuale : 'auto';
 
-  const key = await idbGet('gargano_gemini_key');
-  const icon = document.getElementById('apikey-status-icon');
-  const text = document.getElementById('apikey-status-text');
-  const btn  = document.querySelector('#apikey-status-row button');
-  if (key) {
-    if (icon) icon.textContent = '✅';
-    if (text) { text.textContent = 'Chiave salvata — ' + key.slice(0, 8) + '…'; text.style.color = '#555'; }
-    if (btn)  btn.textContent  = 'Cambia';
-  } else {
-    if (icon) icon.textContent = '❌';
-    if (text) { text.textContent = 'Nessuna chiave — funzioni AI disattivate'; text.style.color = '#c62828'; }
-    if (btn)  btn.textContent  = 'Inserisci';
+  // 2. In modalità automatica mostra quale modello è stato effettivamente scelto,
+  //    altrimenti l'utente non ha modo di saperlo.
+  const info = document.getElementById('modello-attivo-info');
+  if (info) {
+    if (manuale && manuale !== 'auto') {
+      info.textContent = '';
+    } else {
+      let auto = null;
+      try { auto = await idbGet('gargano_gemini_model_auto'); } catch(e) {}
+      info.textContent = auto
+        ? `In uso: ${auto}`
+        : `Nessun modello ancora rilevato — verrà scelto alla prossima richiesta AI (default: ${GEMINI_MODEL_DEFAULT})`;
+    }
   }
-  document.getElementById('settings-modal').classList.add('open');
+
+  // 3. Stato API key con verifica live
+  const iconEl = document.getElementById('apikey-status-icon');
+  const textEl = document.getElementById('apikey-status-text');
+  const btnEl  = document.querySelector('#apikey-status-row button');
+  if (!iconEl || !textEl) return;
+
+  let key = null;
+  try { key = await idbGet('gargano_gemini_key'); } catch(e) {}
+
+  if (!key) {
+    iconEl.textContent = '❌';
+    textEl.textContent = 'Nessuna chiave — funzioni AI disattivate';
+    textEl.style.color = '#c62828';
+    if (btnEl) btnEl.textContent = 'Inserisci';
+    return;
+  }
+  if (btnEl) btnEl.textContent = 'Cambia';
+
+  const short = key.slice(0, 8) + '…';
+  iconEl.textContent = '⏳';
+  textEl.textContent = 'Verifica in corso… (' + short + ')';
+  textEl.style.color = '#555';
+
+  try {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 6000);
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + key, { signal: ctrl.signal });
+    clearTimeout(tid);
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.models && d.models.length > 0) {
+      iconEl.textContent = '✅';
+      textEl.textContent = 'Attiva e funzionante — ' + short;
+      textEl.style.color = '#2e7d32';
+    } else {
+      iconEl.textContent = '❌';
+      textEl.textContent = 'Chiave non valida (HTTP ' + r.status + ') — ' + short;
+      textEl.style.color = '#c62828';
+    }
+  } catch(e) {
+    iconEl.textContent = '⚠️';
+    textEl.textContent = 'Salvata (' + short + ') — verifica non riuscita, controlla la connessione';
+    textEl.style.color = '#b5622b';
+  }
 }
 
 async function rimuoviApiKey() {
+  try { localStorage.removeItem('gargano_gemini_key'); } catch(e) {}   // pulizia legacy
   await idbDelete('gargano_gemini_key');
+  await invalidaCacheModello();   // la prossima key potrà avere modelli diversi
   showToast("API Key rimossa con successo");
   closeModal('settings-modal');
 }
@@ -1668,7 +1779,7 @@ const LUOGHI = [
   {name:"Cagnano Varano",cat:"borgo",coords:[41.8273, 15.7725],desc:"Borgo affacciato sull'omonimo lago, famoso per la Grotta di San Michele.",pop:false},
   {name:"Carpino",cat:"borgo",coords:[41.8436, 15.8577],desc:"La città dell'olio e del folklore, nota per il Carpino Folk Festival.",pop:true},
   {name:"Castello Svevo di Vieste",cat:"cultura",coords:[41.8808, 16.1786],desc:"Imponente fortezza a picco sul mare.",pop:true},
-  {name:"Foresta Umbra",cat:"natura",coords:[41.8150, 15.9860],desc:"Faggete vetuste patrimonio UNESCO.",pop:true},
+  {name:"Foresta Umbra",cat:"natura",coords:[41.8203, 16.0288],desc:"Faggete vetuste patrimonio UNESCO.",pop:true},
   {name:"Ischitella",cat:"borgo",coords:[41.9039, 15.8974],desc:"Borgo panoramico che domina il mare e il Lago di Varano.",pop:false},
   {name:"Isole Tremiti",cat:"natura",coords:[42.1216, 15.5015],desc:"Arcipelago paradisiaco al largo del Gargano.",pop:true},
   {name:"Lesina",cat:"borgo",coords:[41.8601, 15.3524],desc:"Famosa per il suo lago costiero e le tradizionali anguille.",pop:false},
@@ -1696,30 +1807,30 @@ const SENTIERI = [
 ];
 
 const RISTORANTI = [
-  {name:"Agriturismo Monte Sacro",loc:"Mattinata",cat:"agriturismo",price:"€€",cucina:"Tradizionale",coords:[41.7300, 16.0200],desc:"Prodotti biologici locali e olio extravergine.",piatto:"Caciocavallo podolico alla piastra"},
-  {name:"Al Trabucco da Mimì",loc:"Peschici",cat:"ristorante",price:"€€€",cucina:"Pesce e Crudi",coords:[41.9515, 16.0230],desc:"Storico ristorante su un vero trabucco."},
-  {name:"Gelateria Papillon",loc:"Vieste",cat:"gelateria",price:"€",cucina:"Gelato",coords:[41.8830, 16.1760],desc:"Gelato artigianale storico in centro."},
-  {name:"Masseria Falcare",loc:"Cagnano Varano",cat:"agriturismo",price:"€€",cucina:"Km 0",coords:[41.8300, 15.7500],desc:"Immersi nella natura del Gargano.",piatto:"Orecchiette fresche e carne alla brace"},
-  {name:"Medioevo",loc:"Monte Sant'Angelo",cat:"ristorante",price:"€€",cucina:"Tradizionale",coords:[41.7080, 15.9530],desc:"A due passi dal Santuario, ottima carne podolica."},
-  {name:"Osteria degli Archi",loc:"San Giovanni Rotondo",cat:"ristorante",price:"€€",cucina:"Garganica",coords:[41.7050, 15.7300],desc:"Sapori autentici vicino ai luoghi di Padre Pio."},
-  {name:"Osteria del Borgo",loc:"Vico del Gargano",cat:"osteria",price:"€€",cucina:"Terra e Paposcia",coords:[41.8960, 15.9570],desc:"Il regno della Paposcia e dei sapori di terra."},
-  {name:"Panificio Biscotti",loc:"Monte Sant'Angelo",cat:"bakery",price:"€",cucina:"Forno tipico",coords:[41.7075, 15.9550],desc:"Famoso per il pane di Monte Sant'Angelo e i dolci tipici.",piatto:"Ostie ripiene"},
+  {name:"Agriturismo Monte Sacro",loc:"Mattinata",cat:"agriturismo",price:"€€",cucina:"Tradizionale",coords:[41.7538, 16.0290],desc:"Prodotti biologici locali e olio extravergine.",piatto:"Caciocavallo podolico alla piastra"},
+  {name:"Al Trabucco da Mimì",loc:"Peschici",cat:"ristorante",price:"€€€",cucina:"Pesce e Crudi",coords:[41.9476, 16.0304],desc:"Storico ristorante su un vero trabucco."},
+  {name:"Gelateria Artigianale Maggiore",loc:"Vieste",cat:"gelateria",price:"€",cucina:"Gelato",coords:[41.8833, 16.1775],desc:"Gelateria artigianale storica in via Santa Maria di Merino."},
+  {name:"Agriturismo Falcare",loc:"Cagnano Varano",cat:"agriturismo",price:"€€",cucina:"Km 0",coords:[41.7801, 15.8335],desc:"Immersi nella natura del Gargano.",piatto:"Orecchiette fresche e carne alla brace"},
+  {name:"Medioevo",loc:"Monte Sant'Angelo",cat:"ristorante",price:"€€",cucina:"Tradizionale",coords:[41.7076, 15.9540],web:"https://ristorante-medioevo.it",desc:"A due passi dal Santuario, chef Aldo Vaira: tradizione garganica e carne podolica."},
+  {name:"Osteria degli Archi",loc:"Vieste",cat:"ristorante",price:"€€",cucina:"Pesce e Garganica",coords:[41.8825, 16.1830],desc:"Nel centro storico di Vieste, cucina di mare e sapori garganici."},
+  {name:"Osteria del Borgo",loc:"Mattinata",cat:"osteria",price:"€€",cucina:"Terra e Mare",coords:[41.7097, 16.0519],desc:"Quattro antiche case unite in osteria: paste fresche e sapori di terra."},
+  {name:"Il Forno Moretti 1960",loc:"Monte Sant'Angelo",cat:"bakery",price:"€",cucina:"Forno tipico",coords:[41.7063, 15.9627],desc:"Forno storico dal 1960: pane, focaccia e dolci tipici del Gargano.",piatto:"Ostie ripiene"},
   {name:"Porta di Basso",loc:"Peschici",cat:"ristorante",price:"€€€",cucina:"Creativa",coords:[41.9470, 16.0130],desc:"Ristorante stellato a strapiombo sul mare."},
-  {name:"Ristorante Il Capriccio",loc:"Vieste",cat:"ristorante",price:"€€€",cucina:"Gourmet Marinara",coords:[41.8840, 16.1750],desc:"Alta cucina di mare sul porto di Vieste."},
-  {name:"Trabocco San Lorenzo",loc:"Vieste",cat:"ristorante",price:"€€",cucina:"Pesce",coords:[41.8900, 16.1600],desc:"Cenare sospesi sul mare.",piatto:"Troccoli ai frutti di mare"},
-  {name:"Trattoria Il Vecchio Forno",loc:"Vieste",cat:"ristorante",price:"€€",cucina:"Pugliese",coords:[41.8815, 16.1780],desc:"Cucina tipica nel centro storico di Vieste."}
+  {name:"Ristorante Il Capriccio",loc:"Vieste",cat:"ristorante",price:"€€€",cucina:"Gourmet Marinara",coords:[41.8856, 16.1779],web:"https://www.ilcapricciovieste.it",desc:"Alta cucina di mare sul porto di Vieste, chef Leonardo Vescera."},
+  {name:"Trabucco San Lorenzo",loc:"Vieste",cat:"ristorante",price:"€€",cucina:"Pesce",coords:[41.8955, 16.1611],desc:"Cenare sospesi sul mare.",piatto:"Troccoli ai frutti di mare"},
+  {name:"Vecchia Vieste Ristorante Tipico",loc:"Vieste",cat:"ristorante",price:"€€",cucina:"Pugliese",coords:[41.8828, 16.1830],desc:"Ristorante tipico in un antico edificio in pietra nel centro storico."}
 ];
 
 const ALLOGGI_DEFAULT = [
-  {name:"B&B La Piana della Macchia",coords:[41.8200, 15.9800],tipo:"b&b",prezzo:75,stelle:3,voto:"8.7 ⭐",loc:"Vico del Gargano",url:"https://www.lapianadellamacchia.it",desc:"Immerso nel verde vicino alla Foresta Umbra."},
-  {name:"B&B Marina Piccola",coords:[41.8835, 16.1785],tipo:"b&b",prezzo:90,stelle:3,voto:"9.1 ⭐",loc:"Vieste",url:"https://www.bbmarinapiccola.com",desc:"Affaccio diretto sul mare in centro a Vieste."},
-  {name:"Baia delle Zagare Hotel",coords:[41.7480, 16.1450],tipo:"resort",prezzo:280,stelle:4,voto:"9.3 🌟",loc:"Mattinata",url:"https://www.hotelbaiadellezagare.it",desc:"Accesso privato all'iconica spiaggia dei faraglioni."},
-  {name:"Centro di Spiritualità Padre Pio",coords:[41.7055, 15.7250],tipo:"hotel",prezzo:80,stelle:3,voto:"8.9 ⭐",loc:"San Giovanni Rotondo",url:"https://www.centrospiritualitapadrepio.it",desc:"Accoglienza ideale per i pellegrini."},
-  {name:"Gusmay Resort",coords:[41.9300, 16.0800],tipo:"resort",prezzo:210,stelle:4,voto:"8.9 ⭐",loc:"Peschici",url:"https://www.gusmayresort.it",desc:"Struttura elegante incastonata nella baia."},
-  {name:"Hotel D'Amato",coords:[41.9480, 16.0100],tipo:"hotel",prezzo:140,stelle:4,voto:"8.5 ⭐",loc:"Peschici",url:"https://www.hoteldamato.it",desc:"Piscine e vista mare, a breve distanza dalla spiaggia."},
-  {name:"Hotel Palace Sant'Angelo",coords:[41.7065, 15.9535],tipo:"hotel",prezzo:120,stelle:4,voto:"8.8 ⭐",loc:"Monte Sant'Angelo",url:"https://www.hotelpalacesantangelo.it",desc:"Panoramico, a due passi dal Santuario UNESCO."},
-  {name:"Pizzomunno Vieste Palace Hotel",coords:[41.8750, 16.1700],tipo:"hotel",prezzo:250,stelle:5,voto:"9.2 🌟",loc:"Vieste",url:"https://www.pizzomunnohotel.it",desc:"Resort esclusivo sulla spiaggia di Pizzomunno."},
-  {name:"Villaggio San Matteo Resort",coords:[41.7100, 16.0600],tipo:"villaggio",prezzo:130,stelle:4,voto:"8.6 ⭐",loc:"Mattinata",url:"https://www.sanmatteoresort.it",desc:"Perfetto per famiglie, tra ulivi e mare."}
+  {name:"B&B A Casa di Gaia",coords:[41.8960, 15.9550],tipo:"b&b",prezzo:75,stelle:3,voto:"9.0 ⭐",loc:"Vico del Gargano",url:"https://www.acasadigaia.it",desc:"Nel centro storico di Vico, incastonato tra due torri dell'antica cinta muraria."},
+  {name:"B&B Marina Piccola",coords:[41.8837, 16.1803],tipo:"b&b",prezzo:90,stelle:3,voto:"9.1 ⭐",loc:"Vieste",desc:"Affaccio diretto sul mare in centro a Vieste."},
+  {name:"Baia delle Zagare Hotel",coords:[41.7473, 16.1448],tipo:"resort",prezzo:280,stelle:4,voto:"9.3 🌟",loc:"Mattinata",url:"https://www.baia-delle-zagare.it",desc:"Accesso privato all'iconica spiaggia dei faraglioni."},
+  {name:"Centro di Spiritualità Padre Pio",coords:[41.7062, 15.7070],tipo:"hotel",prezzo:80,stelle:3,voto:"8.9 ⭐",loc:"San Giovanni Rotondo",url:"https://www.centrospiritualepadrepio.it",desc:"Accoglienza ideale per i pellegrini."},
+  {name:"Gusmay Resort",coords:[41.9398, 16.0633],tipo:"resort",prezzo:210,stelle:4,voto:"8.9 ⭐",loc:"Peschici",url:"https://www.valturbaiadelgusmay.com",desc:"Struttura elegante incastonata nella baia."},
+  {name:"Hotel D'Amato",coords:[41.9449, 16.0090],tipo:"hotel",prezzo:140,stelle:4,voto:"8.5 ⭐",loc:"Peschici",url:"https://www.hoteldamato.it",desc:"Piscine e vista mare, a breve distanza dalla spiaggia."},
+  {name:"Palace Hotel San Michele",coords:[41.7075, 15.9495],tipo:"hotel",prezzo:120,stelle:4,voto:"8.8 ⭐",loc:"Monte Sant'Angelo",desc:"Antico palazzo del '900 nel parco-giardino più alto della Puglia, a 300 m dalla Basilica."},
+  {name:"Pizzomunno Vieste Palace Hotel",coords:[41.8719, 16.1739],tipo:"hotel",prezzo:250,stelle:5,voto:"9.2 🌟",loc:"Vieste",url:"https://www.hotelpizzomunno.it",desc:"Resort esclusivo sulla spiaggia di Pizzomunno."},
+  {name:"Villaggio San Matteo Resort",coords:[41.7036, 16.0642],tipo:"villaggio",prezzo:130,stelle:4,voto:"8.6 ⭐",loc:"Mattinata",desc:"Perfetto per famiglie, tra ulivi e mare."}
 ];
 
 const ITINERARI_PREDEFINITI = [
@@ -1738,11 +1849,57 @@ let SENTIERI_CUSTOM     = [];
 let SENTIERI_NASCOSTI   = [];
 let RISTORANTI_CUSTOM   = [];
 let RISTORANTI_NASCOSTI = new Set();
-let ALLOGGI_CONSIGLIATI = ALLOGGI_DEFAULT;
+let ALLOGGI_CONSIGLIATI = [...ALLOGGI_DEFAULT];   // copia: prima era un riferimento e unshift() scriveva dentro ALLOGGI_DEFAULT
+let ALLOGGI_CUSTOM = [];
 let ITINERARI_CUSTOM    = [];
 let ITINERARI_NASCOSTI  = [];
 let VALUTAZIONI         = {};
 let CHECKINS            = [];
+
+
+// ============ Alloggi: migrazione dal vecchio modello "snapshot" ============
+// Il vecchio modello salvava l'INTERA lista alloggi. Difetto: una volta che
+// l'utente aveva aperto l'app, ogni modifica futura ad ALLOGGI_DEFAULT non lo
+// raggiungeva più. Il nuovo modello salva solo la blacklist dei nomi eliminati
+// e ricostruisce la lista da ALLOGGI_DEFAULT a ogni avvio.
+async function migraAlloggiSnapshot() {
+  const snapshot = await safeParse('gargano_alloggi_consigliati', null);
+  if (snapshot === null || !Array.isArray(snapshot)) return;   // già migrato o mai usato
+
+  const nomiDefault  = ALLOGGI_DEFAULT.map(d => d.name);
+  const nomiSnapshot = snapshot.map(a => a.name);
+
+  // 1. Nascosti: i default spariti dallo snapshot erano stati eliminati dall'utente
+  const nascosti = await safeParse('gargano_alloggi_nascosti', []);
+  ALLOGGI_DEFAULT.forEach(d => {
+    if (!nomiSnapshot.includes(d.name) && !nascosti.includes(d.name)) nascosti.push(d.name);
+  });
+  await saveData('gargano_alloggi_nascosti', nascosti);
+
+  // 2. Custom: voci dello snapshot che non sono default
+  const custom = await safeParse('gargano_alloggi_custom', []);
+  const nomiCustom = custom.map(c => c.name);
+  snapshot.forEach(a => {
+    if (nomiDefault.includes(a.name) || nomiCustom.includes(a.name)) return;
+    if (a.custom === true || !nomiDefault.includes(a.name)) custom.push({ ...a, custom: true });
+    // altrimenti: default di una vecchia versione, ormai dismesso -> scartato,
+    // così non riappare a chi ce l'aveva in cache
+  });
+  await saveData('gargano_alloggi_custom', custom);
+
+  // 3. Lo snapshot non serve più
+  await idbDelete('gargano_alloggi_consigliati');
+  console.info('[alloggi] migrazione snapshot -> blacklist completata');
+}
+
+// Ricostruisce ALLOGGI_CONSIGLIATI da ALLOGGI_DEFAULT meno i nascosti, più i custom
+async function costruisciAlloggi() {
+  const nascosti = await safeParse('gargano_alloggi_nascosti', []);
+  ALLOGGI_CONSIGLIATI = ALLOGGI_DEFAULT.filter(a => !nascosti.includes(a.name));
+  ALLOGGI_CUSTOM.forEach(c => {
+    if (!ALLOGGI_CONSIGLIATI.find(a => a.name === c.name)) ALLOGGI_CONSIGLIATI.unshift(c);
+  });
+}
 
 async function initData() {
   LUOGHI_CUSTOM       = await safeParse('gargano_luoghi_custom', []);
@@ -1750,7 +1907,10 @@ async function initData() {
   SENTIERI_NASCOSTI   = await safeParse('gargano_sentieri_nascosti', []);
   RISTORANTI_CUSTOM   = await safeParse('gargano_ristoranti_custom', []);
   RISTORANTI_NASCOSTI = new Set(await safeParse('gargano_ristoranti_nascosti', []));
-  ALLOGGI_CONSIGLIATI = await safeParse('gargano_alloggi_consigliati', ALLOGGI_DEFAULT);
+  ALLOGGI_CUSTOM      = await safeParse('gargano_alloggi_custom', []);
+  await migraAlloggiSnapshot();   // una tantum: vecchio snapshot -> blacklist
+  ALLOGGI_CUSTOM      = await safeParse('gargano_alloggi_custom', []);   // rileggi: la migrazione può averla arricchita
+  await costruisciAlloggi();
   ITINERARI_CUSTOM    = await safeParse('gargano_itin', []);
   ITINERARI_NASCOSTI  = await safeParse('gargano_itin_nascosti', []);
   VALUTAZIONI         = await safeParse('gargano_valutazioni', {});
@@ -1770,6 +1930,7 @@ let allMarkers = [];
 let routeLine = null;
 let currentRouteCoords = [];
 let currentRouteNames = [];
+let _routeGen = 0; // token anti-race per il routing OSRM asincrono
 let premiumMarker = null;
 
 const CAT_COLORS = {
@@ -1923,6 +2084,20 @@ function getFasciaAlloggio(p) {
   return '€€€';
 }
 
+// Genera le opzioni del filtro città leggendole dai dati, così restano
+// sempre allineate (inclusi gli elementi aggiunti o rimossi dall'utente).
+function popolaFiltroCitta(selectId, lista) {
+  const el = document.getElementById(selectId);
+  if (!el) return;
+  const scelto = el.value || 'tutte';
+  const citta = [...new Set(lista.map(x => x.loc).filter(Boolean))]
+    .sort((a, b) => a.localeCompare(b, 'it'));
+  el.innerHTML = '<option value="tutte">📍 Tutte le città</option>' +
+    citta.map(x => `<option value="${sanitize(x)}">${sanitize(x)}</option>`).join('');
+  // Mantiene la selezione dell'utente se quella città esiste ancora
+  el.value = (scelto === 'tutte' || citta.includes(scelto)) ? scelto : 'tutte';
+}
+
 function showInfoByName(name, type) {
   let p = null;
   if(type === 'luogo') p = LUOGHI.find(x => x.name === name);
@@ -1972,8 +2147,14 @@ function showInfoByName(name, type) {
 
   const webBtnEl = document.getElementById('info-web-btn');
   webBtnEl.innerHTML = '';
-  if(p.url) {
-    webBtnEl.innerHTML = `<a href="${p.url}" target="_blank" rel="noopener noreferrer" class="btn" style="background:var(--sky);color:#fff;display:inline-block;text-decoration:none">🌐 Sito Web</a>`;
+  // Il sito può essere in 'url' (sentieri, alloggi) o in 'web' (ristoranti custom)
+  const sitoUfficiale = safeUrl(p.url || p.web || '');   // url non valido -> '' -> fallback 'Cerca online'
+  if (sitoUfficiale) {
+    webBtnEl.innerHTML = `<a href="${sanitize(sitoUfficiale)}" target="_blank" rel="noopener noreferrer" class="btn" style="background:var(--sky);color:#fff;display:inline-block;text-decoration:none">🌐 Sito Web</a>`;
+  } else {
+    // Fallback: nessun sito noto → ricerca Google con nome + località
+    const q = encodeURIComponent(`${p.name} ${p.loc || ''} Gargano`.trim().replace(/\s+/g, ' '));
+    webBtnEl.innerHTML = `<a href="https://www.google.com/search?q=${q}" target="_blank" rel="noopener noreferrer" class="btn" style="background:var(--muted);color:#fff;display:inline-block;text-decoration:none">🔍 Cerca online</a>`;
   }
 
   renderRatingBtns(document.getElementById('info-rating'), name);
@@ -2109,6 +2290,17 @@ async function fetchMeteo(lat, lon, el) {
 // ═══════════════════════════════════════════════════════════
 // GESTIONE PERCORSO (ROUTE)
 // ═══════════════════════════════════════════════════════════
+// Distanza geodetica (Haversine) in km tra due punti [lat, lng]
+function distanzaKm(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b)) return 0;
+  const toRad = d => d * Math.PI / 180;
+  const R = 6371; // raggio medio terrestre in km
+  const dLat = toRad(b[0] - a[0]);
+  const dLng = toRad(b[1] - a[1]);
+  const s = Math.sin(dLat/2)**2 + Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLng/2)**2;
+  return 2 * R * Math.asin(Math.min(1, Math.sqrt(s)));
+}
+
 function addPopupToRouteByName(name, type) {
   let p = null;
   if(type === 'luogo') p = LUOGHI.find(x => x.name === name);
@@ -2124,6 +2316,33 @@ function addPopupToRouteByName(name, type) {
   showToast(`"${p.name}" aggiunto al percorso`);
 }
 
+function fetchRouteOSRM(latlngs) {
+  // Percorso stradale reale con fallback su due server OSRM: il demo pubblico
+  // (project-osrm) e spesso sovraccarico, quindi si ripiega su openstreetmap.de.
+  const coordStr = latlngs.map(c => `${c[1]},${c[0]}`).join(';');
+  const servers = [
+    `https://router.project-osrm.org/route/v1/driving/${coordStr}`,
+    `https://routing.openstreetmap.de/routed-car/route/v1/driving/${coordStr}`
+  ];
+  const tryServer = async (base) => {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 6000); // timeout 6s per server
+    try {
+      const r = await fetch(`${base}?overview=full&geometries=geojson`, { signal: ctrl.signal });
+      if (!r.ok) return null;
+      const d = await r.json();
+      const route = d.routes && d.routes[0];
+      if (!route || !route.geometry) return null;
+      return { line: route.geometry.coordinates.map(p => [p[1], p[0]]), km: route.distance / 1000 };
+    } catch (e) { return null; }
+    finally { clearTimeout(tid); }
+  };
+  return (async () => {
+    for (const base of servers) { const res = await tryServer(base); if (res) return res; }
+    return null; // nessun server ha risposto: si tiene la linea in linea d'aria
+  })();
+}
+
 function drawRoute(){
   if(routeLine) map.removeLayer(routeLine);
   if(currentRouteCoords.length < 2){
@@ -2131,15 +2350,29 @@ function drawRoute(){
     document.getElementById('btn-share-route').style.display='none';
     return;
   }
-  routeLine = L.polyline(currentRouteCoords,{color:'#c9a84c',weight:4,dashArray:'8,4'}).addTo(map);
+  const gen = ++_routeGen;                       // invalida eventuali callback OSRM precedenti
+  const coordsSnap = currentRouteCoords.slice();
+  const nTappe = currentRouteNames.length;
+  const info = document.getElementById('route-info');
+  // 1) Linea provvisoria in linea d'aria (tratteggiata), subito visibile
+  routeLine = L.polyline(coordsSnap,{color:'#c9a84c',weight:4,dashArray:'8,4'}).addTo(map);
   map.fitBounds(routeLine.getBounds().pad(0.1));
   let dist=0;
-  for(let i=1;i<currentRouteCoords.length;i++) dist += map.distance(currentRouteCoords[i-1],currentRouteCoords[i])/1000;
-  document.getElementById('route-info').textContent=`🛣 Percorso: ${currentRouteNames.length} tappe · ${dist.toFixed(1)} km`;
+  for(let i=1;i<coordsSnap.length;i++) dist += map.distance(coordsSnap[i-1],coordsSnap[i])/1000;
+  info.textContent=`🛣 Percorso: ${nTappe} tappe · ${dist.toFixed(1)} km (in linea d'aria)`;
   document.getElementById('btn-share-route').style.display='inline-block';
+  // 2) Sostituisci con il percorso stradale reale quando arriva
+  //    (solo se nel frattempo non e' partito un nuovo ridisegno)
+  fetchRouteOSRM(coordsSnap).then(res => {
+    if (gen !== _routeGen || !res) return;       // token superato o nessun percorso: scarta
+    if (routeLine) map.removeLayer(routeLine);
+    routeLine = L.polyline(res.line,{color:'#c9a84c',weight:4}).addTo(map);
+    info.textContent=`🛣 Percorso: ${nTappe} tappe · ${res.km.toFixed(1)} km su strada`;
+  });
 }
 
 function clearRoute(){
+  _routeGen++;   // invalida eventuali percorsi OSRM ancora in arrivo
   currentRouteCoords = []; currentRouteNames = [];
   if(routeLine) map.removeLayer(routeLine);
   document.getElementById('route-info').textContent = '';
@@ -2318,16 +2551,18 @@ function renderTrek(){
   });
 }
 function salvaSentiero() {
-  const nome  = document.getElementById('trek-nome').value.trim();
+  if (SENTIERI_CUSTOM.length >= 6) { showToast('Hai raggiunto il limite di 6 sentieri.'); return; }
+  const nome  = sanitize(document.getElementById('trek-nome').value.trim());
   const diff  = document.getElementById('trek-diff').value;
   const km    = parseFloat(document.getElementById('trek-km').value) || 0;
-  const h     = document.getElementById('trek-h').value.trim() || '–';
-  const start = document.getElementById('trek-start').value.trim() || '–';
-  const desc  = document.getElementById('trek-desc').value.trim();
+  const h     = sanitize(document.getElementById('trek-h').value.trim()) || '–';
+  const start = sanitize(document.getElementById('trek-start').value.trim()) || '–';
+  const desc  = sanitize(document.getElementById('trek-desc').value.trim());
+  const url   = sanitize(document.getElementById('trek-url').value.trim());
   const lat   = parseFloat(document.getElementById('trek-lat').value);
   const lng   = parseFloat(document.getElementById('trek-lng').value);
   if (!nome || isNaN(lat) || isNaN(lng)) { showToast('Compila nome e coordinate!'); return; }
-  const nuovo = { name:nome, diff, km, h, start, desc, coords:[[lat,lng]], custom:true };
+  const nuovo = { name:nome, diff, km, h, start, desc, url, coords:[[lat,lng]], custom:true };
   SENTIERI_CUSTOM.push(nuovo); SENTIERI.push(nuovo);
   saveData('gargano_sentieri_custom', SENTIERI_CUSTOM);
   closeModal('sentiero-modal'); renderTrek(); updateMap(); showToast(`"${nome}" aggiunto! ✅`);
@@ -2357,6 +2592,7 @@ function setPriceFilter(el){
   renderRest(); updateMap();
 }
 function renderRest(){
+  popolaFiltroCitta('filter-rest-city', RISTORANTI.filter(r => !(RISTORANTI_NASCOSTI.has(r.name) && !r.custom)));
   const q = document.getElementById('search-rest').value.toLowerCase();
   const c = document.getElementById('filter-rest-city').value;
   const filtered = RISTORANTI.filter(r => {
@@ -2399,10 +2635,11 @@ function salvaRistorante() {
   const price = document.getElementById('rist-price').value;
   const cucina= document.getElementById('rist-cucina').value.trim();
   const desc  = document.getElementById('rist-desc').value.trim();
+  const web   = sanitize(document.getElementById('rist-web').value.trim());
   const lat   = parseFloat(document.getElementById('rist-lat').value);
   const lng   = parseFloat(document.getElementById('rist-lng').value);
   if (!name || !loc || isNaN(lat) || isNaN(lng)) { showToast('Compila nome, città e coordinate!'); return; }
-  const nuovo = { name, loc, cat, price, cucina, desc, coords:[lat,lng], custom:true };
+  const nuovo = { name, loc, cat, price, cucina, desc, web, coords:[lat,lng], custom:true };
   RISTORANTI_CUSTOM.push(nuovo); RISTORANTI.push(nuovo);
   saveData('gargano_ristoranti_custom', RISTORANTI_CUSTOM);
   closeModal('ristorante-modal'); renderRest(); updateMap(); showToast(`"${name}" aggiunto! ✅`);
@@ -2440,6 +2677,7 @@ function setAlloggiPriceFilter(el){
   renderAlloggi(); updateMap();
 }
 function renderAlloggi(){
+  popolaFiltroCitta('filter-alloggi-city', ALLOGGI_CONSIGLIATI);
   const q = document.getElementById('search-alloggi').value.toLowerCase();
   const c = document.getElementById('filter-alloggi-city').value;
   const filtered = ALLOGGI_CONSIGLIATI.filter(a => {
@@ -2453,6 +2691,21 @@ function renderAlloggi(){
   const list = document.getElementById('list-alloggi');
   list.innerHTML = '';
   document.getElementById('count-alloggi').textContent = `${filtered.length} alloggi locali`;
+
+  // Pulsante ripristina alloggi default rimossi
+  const nascostiCount = ALLOGGI_DEFAULT.length - ALLOGGI_CONSIGLIATI.filter(a => ALLOGGI_DEFAULT.some(d => d.name === a.name)).length;
+  let ripEl = document.getElementById('rip-alloggi-btn');
+  if (!ripEl) {
+    ripEl = document.createElement('button');
+    ripEl.id = 'rip-alloggi-btn';
+    ripEl.className = 'btn btn-outline';
+    ripEl.style.cssText = 'font-size:11px;margin-bottom:8px;width:100%';
+    ripEl.onclick = ripristinaAlloggi;
+    list.parentNode.insertBefore(ripEl, list);
+  }
+  ripEl.style.display = nascostiCount > 0 ? 'block' : 'none';
+  if (nascostiCount > 0)
+    ripEl.textContent = `↩ Ripristina ${nascostiCount} rimoss${nascostiCount===1?'o':'i'}`;
   
   filtered.forEach((a, idx) => {
     const d = document.createElement('div');
@@ -2475,25 +2728,46 @@ function renderAlloggi(){
   });
 }
 function salvaAlloggio() {
-  const name   = document.getElementById('alloggio-nome').value.trim();
-  const loc    = document.getElementById('alloggio-loc').value.trim();
+  const name   = sanitize(document.getElementById('alloggio-nome').value.trim());
+  const loc    = sanitize(document.getElementById('alloggio-loc').value.trim());
   const tipo   = document.getElementById('alloggio-form-tipo').value;
   const prezzo = parseFloat(document.getElementById('alloggio-prezzo').value);
-  const voto   = document.getElementById('alloggio-voto').value.trim() || '8.5 ⭐';
-  const desc   = document.getElementById('alloggio-desc').value.trim();
-  const url    = document.getElementById('alloggio-url').value.trim();
+  const voto   = sanitize(document.getElementById('alloggio-voto').value.trim()) || '8.5';
+  const desc   = sanitize(document.getElementById('alloggio-desc').value.trim());
+  const url    = sanitize(document.getElementById('alloggio-url').value.trim());
   const lat    = parseFloat(document.getElementById('alloggio-lat').value);
   const lng    = parseFloat(document.getElementById('alloggio-lng').value);
   if (!name || !loc || isNaN(prezzo) || isNaN(lat) || isNaN(lng)) { showToast('Compila nome, città, prezzo e coordinate!'); return; }
-  const nuovo = { name, loc, tipo, prezzo, voto, desc, url, coords:[lat,lng] };
+  const nuovo = { name, loc, tipo, prezzo, voto, desc, url, coords:[lat,lng], custom: true };
+  ALLOGGI_CUSTOM.push(nuovo);
   ALLOGGI_CONSIGLIATI.unshift(nuovo);
-  saveData('gargano_alloggi_consigliati', ALLOGGI_CONSIGLIATI);
+  saveData('gargano_alloggi_custom', ALLOGGI_CUSTOM);
   closeModal('alloggio-modal'); renderAlloggi(); updateMap(); showToast(`"${name}" aggiunto! ✅`);
 }
-function eliminaAlloggioConsigliato(name) {
-  ALLOGGI_CONSIGLIATI = ALLOGGI_CONSIGLIATI.filter(x => x.name !== name);
-  saveData('gargano_alloggi_consigliati', ALLOGGI_CONSIGLIATI);
+async function eliminaAlloggioConsigliato(name) {
+  // Se è un alloggio DEFAULT, il nome va nella blacklist per persistere l'eliminazione
+  const isDefault = ALLOGGI_DEFAULT.some(x => x.name === name);
+  if (isDefault) {
+    const nascosti = await safeParse('gargano_alloggi_nascosti', []);
+    if (!nascosti.includes(name)) {
+      nascosti.push(name);
+      await saveData('gargano_alloggi_nascosti', nascosti);
+    }
+  }
+  // Rimuove dai custom (se era custom)
+  ALLOGGI_CUSTOM = ALLOGGI_CUSTOM.filter(x => x.name !== name);
+  await saveData('gargano_alloggi_custom', ALLOGGI_CUSTOM);
+  // Rimuove dalla lista in memoria
+  const idx = ALLOGGI_CONSIGLIATI.findIndex(x => x.name === name);
+  if (idx > -1) ALLOGGI_CONSIGLIATI.splice(idx, 1);
   renderAlloggi(); updateMap(); showToast("Alloggio rimosso");
+}
+
+async function ripristinaAlloggi() {
+  await saveData('gargano_alloggi_nascosti', []);
+  await costruisciAlloggi();
+  renderAlloggi(); updateMap();
+  showToast('Tutti gli alloggi ripristinati ✅');
 }
 function cercaAlloggiPartner(portale) {
   let c = document.getElementById('filter-alloggi-city').value;
@@ -2551,7 +2825,7 @@ function renderEventi() {
   const el3 = document.getElementById('social-eventi');
   if (el3) {
     el3.innerHTML = SOCIAL_EVENTI.map(s => `
-      <a href="${s.url}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;text-decoration:none;color:var(--text);transition:all .2s;">
+      <a href="${sanitize(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;text-decoration:none;color:var(--text);transition:all .2s;">
         <span style="font-size:22px">${s.icon}</span>
         <div><div style="font-size:13px;font-weight:600;color:var(--forest)">${s.nome}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${s.desc}</div></div>
         <span style="margin-left:auto;font-size:13px;color:var(--muted)">↗</span>
@@ -2609,13 +2883,20 @@ function stampaItinerarioByName(name, isCustom) {
   const list = isCustom ? ITINERARI_CUSTOM : ITINERARI_PREDEFINITI;
   const it = list.find(x => x.name === name);
   if(!it) return;
-  const tappe = it.tappe.map((t,i)=>`<tr><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:600">${i+1}</td><td style="padding:6px 10px;border-bottom:1px solid #eee">${t}</td></tr>`).join('');
+  let kmTot = 0;
+  const tappe = it.tappe.map((t,i)=>{
+    const c = it.coords && it.coords[i], cPrev = it.coords && it.coords[i-1];
+    let seg = '';
+    if (i>0 && Array.isArray(c) && Array.isArray(cPrev)) { const k = distanzaKm(cPrev, c); kmTot += k; seg = k.toFixed(1) + ' km'; }
+    return `<tr><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:600">${i+1}</td><td style="padding:6px 10px;border-bottom:1px solid #eee">${t}</td><td style="padding:6px 10px;border-bottom:1px solid #eee;color:#666;font-size:13px;white-space:nowrap">${seg}</td></tr>`;
+  }).join('');
+  const kmTotStr = kmTot > 0 ? kmTot.toFixed(1) : (it.km || 0);
   const html = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><title>Stampa Itinerario</title>
     <style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#222;padding:0 20px} h1{color:#0d4f6e;border-bottom:2px solid #0d4f6e;padding-bottom:8px} .meta{display:flex;gap:20px;color:#666;font-size:14px;margin:12px 0 20px} table{width:100%;border-collapse:collapse;margin-top:10px} th{background:#0d4f6e;color:#fff;padding:8px 10px;text-align:left} p{line-height:1.6;color:#444} .footer{margin-top:30px;font-size:12px;color:#999;border-top:1px solid #eee;padding-top:10px} @media print{body{margin:20px}}</style></head><body>
     <h1>🗺 ${it.name}</h1>
-    <div class="meta"><span>⏱ ${it.giorni} gg</span><span>📏 ${it.km} km</span><span>🚩 ${it.tappe.length} tappe</span></div>
+    <div class="meta"><span>⏱ ${it.giorni} gg</span><span>📏 ${kmTotStr} km</span><span>🚩 ${it.tappe.length} tappe</span></div>
     <p>${it.desc}</p>
-    <table><thead><tr><th>#</th><th>Tappa</th></tr></thead><tbody>${tappe}</tbody></table>
+    <table><thead><tr><th>#</th><th>Tappa</th><th>Tratto</th></tr></thead><tbody>${tappe}</tbody></table>
     <div class="footer">Generato da Gargano Turismo · ${new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'})}</div>
     </body></html>`;
   const w = window.open('','_blank','width=750,height=600');
@@ -2643,8 +2924,9 @@ function ripristinaItinerari() {
 }
 
 // ── BACKUP / RESTORE ──
-function exportData(){
-  const data={ LUOGHI_CUSTOM, SENTIERI_CUSTOM, RISTORANTI_CUSTOM, ALLOGGI_CONSIGLIATI, ITINERARI_CUSTOM, VALUTAZIONI, CHECKINS }; 
+async function exportData(){
+  const ALLOGGI_NASCOSTI = await safeParse('gargano_alloggi_nascosti', []);
+  const data={ LUOGHI_CUSTOM, SENTIERI_CUSTOM, RISTORANTI_CUSTOM, ALLOGGI_CUSTOM, ALLOGGI_NASCOSTI, ITINERARI_CUSTOM, VALUTAZIONI, CHECKINS }; 
   const blob=new Blob([JSON.stringify(data)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download='gargano_backup.json';
@@ -2660,7 +2942,10 @@ function importData(e){
       if(d.LUOGHI_CUSTOM) saveData('gargano_luoghi_custom', d.LUOGHI_CUSTOM);
       if(d.SENTIERI_CUSTOM) saveData('gargano_sentieri_custom', d.SENTIERI_CUSTOM);
       if(d.RISTORANTI_CUSTOM) saveData('gargano_ristoranti_custom', d.RISTORANTI_CUSTOM);
-      if(d.ALLOGGI_CONSIGLIATI) saveData('gargano_alloggi_consigliati', d.ALLOGGI_CONSIGLIATI);
+      if(d.ALLOGGI_CUSTOM) saveData('gargano_alloggi_custom', d.ALLOGGI_CUSTOM);
+      if(d.ALLOGGI_NASCOSTI) saveData('gargano_alloggi_nascosti', d.ALLOGGI_NASCOSTI);
+      // Backup vecchio formato: lo snapshot verrà convertito da migraAlloggiSnapshot() al riavvio
+      if(d.ALLOGGI_CONSIGLIATI && !d.ALLOGGI_NASCOSTI) saveData('gargano_alloggi_consigliati', d.ALLOGGI_CONSIGLIATI);
       if(d.ITINERARI_CUSTOM) saveData('gargano_itin', d.ITINERARI_CUSTOM);
       if(d.VALUTAZIONI) saveData('gargano_valutazioni', d.VALUTAZIONI);
       if(d.CHECKINS) saveData('gargano_checkins', d.CHECKINS);
@@ -2789,9 +3074,10 @@ function mostraPassaporto() {
   if(CHECKINS.length === 0) {
     list.innerHTML = '<li>🌱 Nessun luogo ancora visitato. Vai in un luogo e usa il GPS!</li>';
   } else {
-    CHECKINS.forEach(nome => {
-      list.innerHTML += `<li style="padding:8px 0; border-bottom:1px solid var(--border);">✅ <b>${nome}</b></li>`;
-    });
+    // .map().join('') in una sola assegnazione, con sanitize sui valori dinamici
+    list.innerHTML = CHECKINS
+      .map(nome => `<li style="padding:8px 0; border-bottom:1px solid var(--border);">✅ <b>${sanitize(nome)}</b></li>`)
+      .join('');
   }
 
   const badgesEl = document.getElementById('passaporto-badges');
@@ -2818,7 +3104,6 @@ function mostraPassaporto() {
 // ═══════════════════════════════════════════════════════════
 function toggleChat() { document.getElementById('chat-panel').classList.toggle('open'); }
 
-const apiKey = ""; // rimosso: la key viene sempre letta da IndexedDB
 
 function askForApiKeyModal() {
   return new Promise(resolve => {
@@ -2861,6 +3146,7 @@ function askForApiKeyModal() {
       document.body.removeChild(overlay);
       resolve(val);
     };
+    // Invio con Enter
     document.getElementById('temp-api-key').addEventListener('keydown', e => {
       if (e.key === 'Enter') document.getElementById('btn-save-key').click();
     });
@@ -2872,42 +3158,74 @@ function askForApiKeyModal() {
 // ═══════════════════════════════════════════════════════════
 const PROMPT_ANTI_ALLUCINAZIONE = "Rispondi SOLO in base ai risultati di ricerca. Non inventare mai menù, piatti, prezzi, orari o servizi. Se le fonti non contengono un'informazione richiesta, scrivi chiaramente: 'Non ho trovato informazioni verificate su questo aspetto, ti consiglio di contattare direttamente la struttura.' Le informazioni su orari e prezzi potrebbero non essere aggiornate: invita sempre a verificare.";
 
-async function fetchGeminiGrounded(payload) {
+async function fetchGeminiGrounded(payload, retryCount = 0, _keyRetry = false) {
   // Restituisce { text, sources:[{title,url}], queries:[], verified:bool }
-  let activeKey = await idbGet('gargano_gemini_key');
+  const activeKey = await getApiKeyOrAsk();
+  if (!activeKey) throw new Error('API Key necessaria per le funzioni AI');
+
   let model = GEMINI_MODEL_DEFAULT;
   try { model = await getGeminiModel(activeKey) || GEMINI_MODEL_DEFAULT; } catch(e) {}
 
   // Tool corretto per famiglia di modelli: 1.5 → google_search_retrieval, 2.x+ → google_search
   const toolName = /gemini-1\.5/i.test(model) ? 'google_search_retrieval' : 'google_search';
+  // Fix modelli 2.5: disattiva i thinking tokens e fissa un budget ampio, sia per
+  // la chiamata con grounding sia per il fallback senza tools (che riusa payload).
+  if (!payload.generationConfig) payload.generationConfig = { maxOutputTokens: 1500, thinkingConfig: { thinkingBudget: 0 } };
   const groundedPayload = JSON.parse(JSON.stringify(payload));
   groundedPayload.tools = [{ [toolName]: {} }];
 
   const callApi = async (body) => {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-    const resp = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    return resp.json();
+    // Timeout 45s: senza AbortController lo spinner può girare all'infinito
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 45000);
+    try {
+      const resp = await fetch(geminiEndpoint(model, activeKey), { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body), signal: ctrl.signal });
+      if (!resp.ok) {
+        const err = new Error(`HTTP ${resp.status}`);
+        err.status = resp.status;   // distingue key non valida da grounding non supportato
+        throw err;
+      }
+      return await resp.json();
+    } finally { clearTimeout(tid); }
   };
 
-  try {
-    const data = await callApi(groundedPayload);
+  const estrai = (data) => {
     const cand = data.candidates?.[0];
     const text = cand?.content?.parts?.map(p => p.text || '').join('') || '';
     const gm = cand?.groundingMetadata;
     const sources = (gm?.groundingChunks || [])
       .map(c => ({ title: c.web?.title || c.web?.uri || '', url: c.web?.uri || '' }))
       .filter(s => s.url);
-    const queries = gm?.webSearchQueries || [];
-    return { text, sources, queries, verified: !!gm };
+    return { text, sources, queries: gm?.webSearchQueries || [], verified: !!gm };
+  };
+
+  try {
+    return estrai(await callApi(groundedPayload));
   } catch (e) {
-    // Fallback senza grounding — badge "non verificato"
-    console.warn('Grounding fallito, fallback:', e.message);
+    // Server occupato: riprova con backoff prima di rinunciare al grounding
+    if ((e.status === 503 || e.status === 429 || e.status === 500) && retryCount < 2) {
+      const delay = (retryCount + 1) * 2000;
+      showToast(`⏳ Gemini occupato, riprovo tra ${delay/1000}s…`);
+      await new Promise(r => setTimeout(r, delay));
+      return fetchGeminiGrounded(payload, retryCount + 1, _keyRetry);
+    }
+    // Un 400 qui può voler dire "grounding non supportato" oppure "key non valida":
+    // proviamo prima senza tools, così non chiediamo la key a sproposito.
+    console.warn('Grounding fallito, fallback senza tools:', e.message);
     try {
-      const data = await callApi(payload);
-      const text = data.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
-      return { text, sources: [], queries: [], verified: false };
+      return estrai(await callApi(payload));
     } catch (e2) {
+      // Fallisce anche senza tools → è la key (o il modello) a non andare.
+      if ((e2.status === 400 || e2.status === 403) && !_keyRetry) {
+        await idbDelete('gargano_gemini_key');
+        await invalidaCacheModello();
+        const nuova = await askForApiKeyModal();
+        if (nuova && nuova.trim()) {
+          await setApiKey(nuova);
+          return fetchGeminiGrounded(payload, retryCount, true);
+        }
+        throw new Error("API Key non fornita o annullata dall'utente");
+      }
       throw e2;
     }
   }
@@ -2920,16 +3238,24 @@ function renderGroundingBadge(res) {
   let fonti = '';
   if (res.sources && res.sources.length) {
     fonti = `<div class="fonti-box"><b>Fonti:</b> ` +
-      res.sources.map(s => `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${(s.title||s.url).slice(0,60)}</a>`).join(' · ') +
+      res.sources.map(s => `<a href="${sanitize(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer">${sanitize((s.title||s.url).slice(0,60))}</a>`).join(' · ') +
       `</div>`;
   }
   return badge + fonti;
 }
 
-async function fetchGeminiWithRetry(payload, isJson = false, isVision = false) {
-  let activeKey = await idbGet('gargano_gemini_key');
+async function fetchGeminiWithRetry(payload, isJson = false, isVision = false, retryCount = 0, _keyRetry = false) {
+  const MAX_RETRIES = 2;
+  const activeKey = await getApiKeyOrAsk();
+  if (!activeKey) throw new Error('API Key necessaria per le funzioni AI');
+
   if (isJson) {
-    payload.generationConfig = {
+    // Preserva l'eventuale generationConfig gia impostato dal chiamante
+    // (maxOutputTokens, thinkingConfig) e aggiungi solo cio che serve per il JSON.
+    // thinkingBudget:0 evita che i modelli 2.5 esauriscano il budget "ragionando"
+    // restituendo JSON troncato; e' ignorato senza errori dai modelli non-2.5.
+    const gcBase = payload.generationConfig || { maxOutputTokens: 4096, thinkingConfig: { thinkingBudget: 0 } };
+    payload.generationConfig = Object.assign({}, gcBase, {
       responseMimeType: "application/json",
       responseSchema: {
         type: "OBJECT", properties: {
@@ -2937,19 +3263,40 @@ async function fetchGeminiWithRetry(payload, isJson = false, isVision = false) {
           km: { type: "INTEGER" }, tappe: { type: "ARRAY", items: { type: "STRING" } }
         }, required: ["name", "desc", "giorni", "km", "tappe"]
       }
-    };
+    });
+  } else if (!payload.generationConfig) {
+    // Testo libero (guida, consigli, meteo, analisi foto): disattiva i thinking
+    // tokens e fissa un budget ampio cosi il modello non tronca la risposta.
+    payload.generationConfig = { maxOutputTokens: 1500, thinkingConfig: { thinkingBudget: 0 } };
   }
 
   const model = await getGeminiModel(activeKey);
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-  const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  const endpoint = geminiEndpoint(model, activeKey);
+
+  // Timeout 45s: senza AbortController lo spinner può girare all'infinito
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), 45000);
+  let response;
+  try {
+    response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal });
+  } finally { clearTimeout(tid); }
 
   if (!response.ok) {
-    if (response.status === 400 || response.status === 403) {
+    // Errore temporaneo del server: retry con backoff progressivo
+    if ((response.status === 503 || response.status === 429 || response.status === 500) && retryCount < MAX_RETRIES) {
+      const delay = (retryCount + 1) * 2000;
+      showToast(`⏳ Gemini occupato, riprovo tra ${delay/1000}s… (${retryCount+1}/${MAX_RETRIES})`);
+      await new Promise(r => setTimeout(r, delay));
+      return fetchGeminiWithRetry(payload, isJson, isVision, retryCount + 1, _keyRetry);
+    }
+    // Key non valida: la chiediamo UNA sola volta (_keyRetry evita il loop)
+    if ((response.status === 400 || response.status === 403) && !_keyRetry) {
+      await idbDelete('gargano_gemini_key');
+      await invalidaCacheModello();
       const newKey = await askForApiKeyModal();
-      if (newKey) {
-        await idbSet('gargano_gemini_key', newKey);
-        return fetchGeminiWithRetry(payload, isJson, isVision);
+      if (newKey && newKey.trim()) {
+        await setApiKey(newKey);
+        return fetchGeminiWithRetry(payload, isJson, isVision, retryCount, true);
       }
       throw new Error("API Key non fornita o annullata dall'utente");
     }
@@ -2958,6 +3305,7 @@ async function fetchGeminiWithRetry(payload, isJson = false, isVision = false) {
 
   const data = await response.json();
   const textResult = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!textResult) throw new Error('Risposta AI vuota o non valida');
   return isJson ? JSON.parse(textResult) : textResult;
 }
 
@@ -2983,7 +3331,7 @@ async function inviaMessaggioAI() {
     const res = await fetchGeminiGrounded(payload);
     document.getElementById(loaderId).outerHTML = `<div class="chat-bubble ai">${(res.text||'').replace(/\n/g, '<br>')}${renderGroundingBadge(res)}</div>`;
   } catch (e) {
-    document.getElementById(loaderId).outerHTML = `<div class="chat-bubble ai" style="color:var(--rust)">Errore AI. Riprova.</div>`;
+    document.getElementById(loaderId).outerHTML = `<div class="chat-bubble ai" style="color:var(--rust)">Errore: ${sanitize(e.message || 'AI non disponibile')}. Riprova.</div>`;
   }
   msgBox.scrollTop = msgBox.scrollHeight;
 }
@@ -3018,16 +3366,10 @@ async function richiediGuidaAI(nome, tipo, modalita) {
   const btnTesto = document.getElementById('btn-ai-testo');
   const resultBox = document.getElementById('info-ai-result');
 
-  // Verifica API key prima di tutto
-  const activeKey = await idbGet('gargano_gemini_key');
-  if (!activeKey) {
-    const newKey = await askForApiKeyModal();
-    if (newKey && newKey.trim()) {
-      await idbSet('gargano_gemini_key', newKey.trim());
-    } else {
-      showToast('API Key necessaria per la guida AI');
-      return;
-    }
+  // Verifica API key prima di tutto (toast chiaro invece di un errore generico)
+  if (!await getApiKeyOrAsk()) {
+    showToast('API Key necessaria per la guida AI');
+    return;
   }
   
   if(window.speechSynthesis) window.speechSynthesis.cancel();
@@ -3125,7 +3467,11 @@ async function generaItinerarioAI() {
 
   const payload = {
     contents: [{ parts: [{ text: input }] }],
-    systemInstruction: { parts: [{ text: `Sei un travel planner per il Gargano. Crea un itinerario scegliendo le tappe ESATTAMENTE dall'elenco fornito, copiando il nome identico: ${getAppDati()}` }] }
+    systemInstruction: { parts: [{ text: `Sei un travel planner per il Gargano. Crea un itinerario scegliendo le tappe ESATTAMENTE dall'elenco fornito, copiando il nome identico.
+
+VINCOLO GEOGRAFICO: tieni ogni giornata compatta. Raggruppa tappe geograficamente vicine tra loro (stessa zona o borghi limitrofi) ed evita spostamenti che attraversano il Gargano da un capo all'altro nella stessa giornata. Ordina le tappe in una sequenza logica di percorrenza, minimizzando i km tra una tappa e la successiva.
+
+Elenco luoghi disponibili: ${getAppDati()}` }] }
   };
 
   try {
@@ -3163,7 +3509,7 @@ async function generaItinerarioAI() {
   }
 }
 
-function analizzaFotoAI(event) {
+async function analizzaFotoAI(event) {
   const file = event.target.files[0]; if (!file) return;
   showToast("⏳ Analisi foto in corso...");
   document.getElementById('chat-widget').style.display = 'flex';
@@ -3246,7 +3592,7 @@ async function chiediSommelierAI(nome, loc, cucina) {
     const result = await fetchGeminiGrounded(payload);
     document.getElementById(loaderId).outerHTML = `<div class="chat-bubble ai">🍷 <b>Consiglio:</b><br>${result.text.replace(/\n/g, '<br>')}${renderGroundingBadge(result)}</div>`;
   } catch(e) {
-    document.getElementById(loaderId).outerHTML = `<div class="chat-bubble ai" style="color:var(--rust)">Errore connessione.</div>`;
+    document.getElementById(loaderId).outerHTML = `<div class="chat-bubble ai" style="color:var(--rust)">Errore: ${sanitize(e.message || 'connessione')}</div>`;
   }
   msgBox.scrollTop = msgBox.scrollHeight;
 }
