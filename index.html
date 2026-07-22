@@ -362,6 +362,8 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--cream);c
 .fonti-box{font-size:11px;margin-top:6px;line-height:1.6;color:var(--muted)}
 .fonti-box a{color:var(--sage);text-decoration:none;font-weight:600}
 .fonti-box a:hover{text-decoration:underline}
+/* Focus visibile da tastiera (a11y): ripristina un contorno chiaro dove outline:none lo aveva tolto */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible, .btn:focus-visible, .chip:focus-visible, .tab:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -398,7 +400,7 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--cream);c
 
       <div class="panel active" id="panel-luoghi">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <input class="search-box" id="search-luoghi" placeholder="🔍 Cerca borgo, faro, castello…" oninput="filterLuoghi()" style="flex:1;margin-right:8px"/>
+          <input class="search-box" id="search-luoghi" placeholder="🔍 Cerca borgo, faro, castello…" oninput="filterLuoghiD()" style="flex:1;margin-right:8px"/>
           <button class="btn btn-gold" onclick="openLuogoModal()" style="white-space:nowrap;flex-shrink:0">+ Aggiungi</button>
         </div>
         <div class="filter-row" id="filter-luoghi"></div>
@@ -453,7 +455,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
 
       <div class="panel" id="panel-trekking">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <input class="search-box" id="search-trek" placeholder="🔍 Cerca sentiero…" oninput="filterTrek()" style="flex:1;margin-right:8px"/>
+          <input class="search-box" id="search-trek" placeholder="🔍 Cerca sentiero…" oninput="filterTrekD()" style="flex:1;margin-right:8px"/>
           <button class="btn btn-gold" onclick="openSentieroModal()" style="white-space:nowrap;flex-shrink:0">+ Aggiungi</button>
         </div>
         <div class="filter-row" id="filter-diff">
@@ -519,7 +521,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
 
       <div class="panel" id="panel-ristoranti">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <input class="search-box" id="search-rest" placeholder="🔍 Cerca ristorante o cucina…" oninput="filterRest()" style="flex:1;margin-right:8px"/>
+          <input class="search-box" id="search-rest" placeholder="🔍 Cerca ristorante o cucina…" oninput="filterRestD()" style="flex:1;margin-right:8px"/>
           <button class="btn btn-gold" onclick="openRistoranteModal()" style="white-space:nowrap;flex-shrink:0">+ Aggiungi</button>
         </div>
         <div class="rest-filter-group" style="margin-top:4px">
@@ -565,7 +567,7 @@ box-shadow:0 4px 14px rgba(0,0,0,.15)">
 
       <div class="panel" id="panel-alloggi">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <input class="search-box" id="search-alloggi" placeholder="🔍 Cerca alloggio (es. Nome, zona...)" oninput="filterAlloggi()" style="flex:1;margin-right:8px"/>
+          <input class="search-box" id="search-alloggi" placeholder="🔍 Cerca alloggio (es. Nome, zona...)" oninput="filterAlloggiD()" style="flex:1;margin-right:8px"/>
           <button class="btn btn-gold" onclick="openAlloggioModal()" style="white-space:nowrap;flex-shrink:0">+ Aggiungi</button>
         </div>
 
@@ -1132,6 +1134,46 @@ function showToast(msg){
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
+
+// ── Accessibilità modali: role/aria, Escape per chiudere, focus-trap ──
+function _focusables(root) {
+  return [...root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el => el.offsetParent !== null);
+}
+let _lastFocusBeforeModal = null;
+function _topOpenModal() {
+  const open = document.querySelectorAll('.modal-overlay.open');
+  return open.length ? open[open.length - 1] : null;
+}
+function setupModalA11y() {
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.setAttribute('role', 'dialog');
+    m.setAttribute('aria-modal', 'true');
+    new MutationObserver(() => {
+      if (m.classList.contains('open')) {
+        _lastFocusBeforeModal = document.activeElement;
+        const fo = _focusables(m);
+        if (fo.length) setTimeout(() => fo[0].focus(), 30);
+      } else if (_lastFocusBeforeModal) {
+        try { _lastFocusBeforeModal.focus(); } catch (e) {}
+        _lastFocusBeforeModal = null;
+      }
+    }).observe(m, { attributes: true, attributeFilter: ['class'] });
+  });
+  document.addEventListener('keydown', e => {
+    const m = _topOpenModal();
+    if (!m) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(m.id); return; }
+    if (e.key === 'Tab') {
+      const fo = _focusables(m);
+      if (!fo.length) return;
+      const first = fo[0], last = fo[fo.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupModalA11y);
+else setupModalA11y();
 function closeInfo(){
   document.getElementById('info-panel').classList.remove('open');
   document.getElementById('chat-widget').style.display='flex';
@@ -1410,7 +1452,7 @@ async function importaDaGMapsAI(prefix) {
     if (!activeKey) throw new Error('Nessuna API Key');
     const model = await getGeminiModel(activeKey);
     const endpoint = geminiEndpoint(model, activeKey);
-    const res = await fetch(endpoint, {
+    const res = await fetchTimeout(endpoint, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ contents:[{ parts:[{ text: prompt }] }] })
@@ -1533,6 +1575,13 @@ function sanitize(str) {
   return str.toString().replace(/[&<>'"]/g, tag => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   }[tag]));
+}
+
+// Fetch con timeout: evita richieste appese all'infinito (meteo, geocoding, AI).
+function fetchTimeout(url, opts = {}, ms = 10000) {
+  const ctrl = new AbortController();
+  const id = setTimeout(() => ctrl.abort(), ms);
+  return fetch(url, { ...opts, signal: ctrl.signal }).finally(() => clearTimeout(id));
 }
 
 function safeUrl(u) {
@@ -1889,7 +1938,7 @@ async function migraAlloggiSnapshot() {
 
   // 3. Lo snapshot non serve più
   await idbDelete('gargano_alloggi_consigliati');
-  console.info('[alloggi] migrazione snapshot -> blacklist completata');
+  console.log('[alloggi] migrazione snapshot -> blacklist completata');
 }
 
 // Ricostruisce ALLOGGI_CONSIGLIATI da ALLOGGI_DEFAULT meno i nascosti, più i custom
@@ -2279,7 +2328,7 @@ const WMO = {0:'☀️ Sereno',1:'🌤 Quasi sereno',2:'⛅ Parzialmente nuvolos
 async function fetchMeteo(lat, lon, el) {
   try {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,windspeed_10m&wind_speed_unit=kmh&timezone=Europe%2FRome`;
-    const r = await fetch(url);
+    const r = await fetchTimeout(url);
     const d = await r.json();
     const c = d.current;
     const desc = WMO[c.weathercode] || '🌡 Meteo';
@@ -2421,6 +2470,13 @@ function filterLuoghi() { renderLuoghi(); updateMap(); }
 function filterTrek() { renderTrek(); updateMap(); }
 function filterRest() { renderRest(); updateMap(); }
 function filterAlloggi() { renderAlloggi(); updateMap(); }
+// Debounce sulla ricerca: evita di ricostruire l'intera lista ad ogni tasto.
+// Esposti su window perche' gli oninput inline non risolvono i const di script.
+function debounce(fn, ms = 200) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+window.filterLuoghiD = debounce(filterLuoghi);
+window.filterTrekD = debounce(filterTrek);
+window.filterRestD = debounce(filterRest);
+window.filterAlloggiD = debounce(filterAlloggi);
 
 // ── LUOGHI ──
 const CATS_LUOGHI=[
@@ -2468,13 +2524,13 @@ function renderLuoghi(){
     d.className = 'list-card';
     d.dataset.name = p.name;
     const rv = VALUTAZIONI[p.name] || '';
-    d.innerHTML = `<h3>${p.name}
+    d.innerHTML = `<h3>${sanitize(p.name)}
       ${p.pop?'<span class="badge" style="background:#fff3cd;color:#856404;margin-left:5px">⭐ Pop</span>':''}
       ${p.custom?'<span class="badge" style="background:#e8f0fe;color:#1565c0;margin-left:5px">✏️ Mio</span>':''}
       ${rv?`<span style="margin-left:4px;font-size:14px">${rv}</span>`:''}
     </h3>
     <div class="badge-row"><span class="badge cat-${p.cat}">${p.cat}</span></div>
-    <p>${p.desc}</p>
+    <p>${sanitize(p.desc)}</p>
     <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap">
       <button data-n="${p.name}" onclick="event.stopPropagation(); showInfoByName(this.dataset.n, 'luogo')" style="font-size:11px;background:var(--sky);color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;font-weight:600">🔍 Dettagli</button>
       <button data-n="${p.name}" onclick="event.stopPropagation(); eliminaLuogoCustom(this.dataset.n)" style="font-size:11px;background:#c62828;color:#fff;border:none;border-radius:6px;padding:3px 8px;cursor:pointer;font-weight:600">🗑 Rimuovi</button>
@@ -2533,12 +2589,12 @@ function renderTrek(){
     const d = document.createElement('div');
     d.className = 'list-card';
     d.dataset.name = s.name;
-    d.innerHTML = `<h3>${s.name} ${s.custom ? '<span class="badge" style="background:#e8f0fe;color:#1565c0;margin-left:5px">✏️ Mio</span>' : ''}</h3>
+    d.innerHTML = `<h3>${sanitize(s.name)} ${s.custom ? '<span class="badge" style="background:#e8f0fe;color:#1565c0;margin-left:5px">✏️ Mio</span>' : ''}</h3>
       <div class="badge-row">
         <span class="badge diff-${s.diff}">${s.diff==='F'?'🟢 Facile':s.diff==='M'?'🟡 Medio':s.diff==='D'?'🔴 Difficile':'⚫ Esperto'}</span>
         <span class="badge">📏 ${s.km} km</span><span class="badge">⏱ ${s.h}</span>
       </div>
-      <p>🚩 ${s.start} · ${s.desc}</p>
+      <p>🚩 ${sanitize(s.start)} · ${sanitize(s.desc)}</p>
       <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap">
         ${s.url ? `<button data-u="${s.url}" onclick="event.stopPropagation(); window.open(this.dataset.u,'_blank')" style="font-size:11px;background:#00b562;color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;font-weight:600">🌐 Web</button>` : ''}
         ${s.custom
@@ -2611,14 +2667,14 @@ function renderRest(){
     const d = document.createElement('div');
     d.className = 'list-card';
     d.dataset.name = r.name;
-    d.innerHTML = `<h3>${r.name} ${r.custom ? '<span class="badge" style="background:#e8f0fe;color:#1565c0;margin-left:5px">✏️ Mio</span>' : ''}</h3>
+    d.innerHTML = `<h3>${sanitize(r.name)} ${r.custom ? '<span class="badge" style="background:#e8f0fe;color:#1565c0;margin-left:5px">✏️ Mio</span>' : ''}</h3>
       <div class="badge-row">
         <span class="badge cat-ristorante">${r.cat}</span>
         <span class="badge">${r.price}</span>
         ${r.voto ? `<span class="badge">⭐ ${r.voto}</span>` : ''}
-        <span class="badge">📍 ${r.loc}</span>
+        <span class="badge">📍 ${sanitize(r.loc)}</span>
       </div>
-      <p>${r.cucina} · ${r.desc}</p>
+      <p>${sanitize(r.cucina)} · ${sanitize(r.desc)}</p>
       <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap">
         ${r.custom 
           ? `<button data-n="${r.name}" onclick="event.stopPropagation(); eliminaRistoranteCustom(this.dataset.n)" style="font-size:11px;background:transparent;border:1px solid #ddd;border-radius:6px;padding:3px 8px;cursor:pointer;color:var(--rust)">🗑 Rimuovi</button>` 
@@ -2712,14 +2768,14 @@ function renderAlloggi(){
     d.className = 'list-card';
     d.dataset.name = a.name;
     d.style.borderLeft = `4px solid ${TIPO_COLOR[a.tipo]||'#000'}`;
-    d.innerHTML = `<h3>${a.name}</h3>
+    d.innerHTML = `<h3>${sanitize(a.name)}</h3>
       <div class="badge-row">
         <span class="badge" style="background:#e8f4fd;color:#003580">${a.tipo}</span>
         <span class="badge">€${a.prezzo} / notte</span>
         ${a.voto ? `<span class="badge">⭐ ${a.voto}</span>` : ''}
-        <span class="badge">📍 ${a.loc}</span>
+        <span class="badge">📍 ${sanitize(a.loc)}</span>
       </div>
-      <p>${a.desc||''}</p>
+      <p>${sanitize(a.desc||'')}</p>
       <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;justify-content:flex-end">
         <button data-n="${a.name}" onclick="event.stopPropagation(); eliminaAlloggioConsigliato(this.dataset.n)" style="font-size:11px;background:transparent;border:1px solid #ddd;border-radius:6px;padding:3px 8px;cursor:pointer;color:var(--rust)">🗑 Rimuovi</button>
       </div>`;
@@ -2845,9 +2901,9 @@ function renderItinerari() {
   ITINERARI_PREDEFINITI.filter(it => !ITINERARI_NASCOSTI.includes(it.name)).forEach(it => {
     const card = document.createElement('div');
     card.className = 'itin-card';
-    card.innerHTML = `<h3>${it.name}</h3>
+    card.innerHTML = `<h3>${sanitize(it.name)}</h3>
       <div class="itin-meta"><span>⏱ ${it.giorni} gg</span><span>📏 ${it.km} km</span><span>🚩 ${it.tappe.length} tappe</span></div>
-      <p>${it.desc}</p>
+      <p>${sanitize(it.desc)}</p>
       <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
         <button class="btn" data-n="${it.name}" onclick="loadItinRouteByName(this.dataset.n, false)">🗺 Carica mappa</button>
         <button class="btn" data-n="${it.name}" onclick="stampaItinerarioByName(this.dataset.n, false)" style="background:var(--stone)">🖨 Stampa</button>
@@ -2859,9 +2915,9 @@ function renderItinerari() {
   ITINERARI_CUSTOM.forEach(it => {
     const card = document.createElement('div');
     card.className = 'itin-card'; card.style.borderLeft = '3px solid var(--gold)';
-    card.innerHTML = `<h3>⭐ ${it.name}</h3>
+    card.innerHTML = `<h3>⭐ ${sanitize(it.name)}</h3>
       <div class="itin-meta"><span>⏱ ${it.giorni} gg</span><span>📏 ${it.km} km</span><span>🚩 ${it.tappe.length} tappe</span></div>
-      <p>${it.desc}</p>
+      <p>${sanitize(it.desc)}</p>
       <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
         <button class="btn" data-n="${it.name}" onclick="loadItinRouteByName(this.dataset.n, true)">🗺 Carica mappa</button>
         <button class="btn" data-n="${it.name}" onclick="stampaItinerarioByName(this.dataset.n, true)" style="background:var(--stone)">🖨 Stampa</button>
@@ -2895,7 +2951,7 @@ function stampaItinerarioByName(name, isCustom) {
     <style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#222;padding:0 20px} h1{color:#0d4f6e;border-bottom:2px solid #0d4f6e;padding-bottom:8px} .meta{display:flex;gap:20px;color:#666;font-size:14px;margin:12px 0 20px} table{width:100%;border-collapse:collapse;margin-top:10px} th{background:#0d4f6e;color:#fff;padding:8px 10px;text-align:left} p{line-height:1.6;color:#444} .footer{margin-top:30px;font-size:12px;color:#999;border-top:1px solid #eee;padding-top:10px} @media print{body{margin:20px}}</style></head><body>
     <h1>🗺 ${it.name}</h1>
     <div class="meta"><span>⏱ ${it.giorni} gg</span><span>📏 ${kmTotStr} km</span><span>🚩 ${it.tappe.length} tappe</span></div>
-    <p>${it.desc}</p>
+    <p>${sanitize(it.desc)}</p>
     <table><thead><tr><th>#</th><th>Tappa</th><th>Tratto</th></tr></thead><tbody>${tappe}</tbody></table>
     <div class="footer">Generato da Gargano Turismo · ${new Date().toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'})}</div>
     </body></html>`;
@@ -2978,6 +3034,7 @@ function scegliDaMappa(prefix, modalId) {
   pickingMapPointFor = prefix;
   pickingMapModalId = modalId;
   showToast("👆 Clicca su un punto esatto della mappa");
+  _showPickBanner();
   document.getElementById('map-container').style.cursor = 'crosshair';
   
   if(window.innerWidth < 768) {
@@ -2995,12 +3052,44 @@ function mapClickHandler(e) {
   document.getElementById(pickingMapPointFor + '-lng').value = e.latlng.lng.toFixed(6);
 
   document.getElementById('map-container').style.cursor = '';
+  _hidePickBanner();
   document.getElementById(pickingMapModalId).classList.add('open');
   showToast("Coordinate acquisite dalla mappa! ✅");
 
   pickingMapPointFor = null;
   pickingMapModalId = null;
   map.off('click', mapClickHandler);
+}
+
+// Banner persistente durante la selezione punto su mappa, con Annulla.
+function _showPickBanner() {
+  let b = document.getElementById('pick-banner');
+  if (!b) {
+    b = document.createElement('div');
+    b.id = 'pick-banner';
+    b.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:3000;background:var(--sky,#0d4f6e);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;gap:12px;font-size:14px;max-width:92vw';
+    b.innerHTML = '<span>👆 Clicca sulla mappa per scegliere il punto</span>';
+    const btn = document.createElement('button');
+    btn.textContent = 'Annulla';
+    btn.style.cssText = 'background:#fff;color:var(--sky,#0d4f6e);border:none;border-radius:6px;padding:5px 10px;font-weight:700;cursor:pointer';
+    btn.onclick = annullaSceltaMappa;
+    b.appendChild(btn);
+    document.body.appendChild(b);
+  }
+  b.style.display = 'flex';
+}
+function _hidePickBanner() {
+  const b = document.getElementById('pick-banner');
+  if (b) b.style.display = 'none';
+}
+function annullaSceltaMappa() {
+  document.getElementById('map-container').style.cursor = '';
+  map.off('click', mapClickHandler);
+  _hidePickBanner();
+  if (pickingMapModalId) document.getElementById(pickingMapModalId).classList.add('open');
+  pickingMapPointFor = null;
+  pickingMapModalId = null;
+  showToast('Selezione annullata');
 }
 
 function locateUser(){
@@ -3442,7 +3531,7 @@ async function fetchElevationProfile(coordsArray, el) {
      if(!start[0] || !end[0]) { el.style.display='none'; return; }
      
      const url = `https://api.open-meteo.com/v1/elevation?latitude=${start[0]},${end[0]}&longitude=${start[1]},${end[1]}`;
-     const res = await fetch(url);
+     const res = await fetchTimeout(url);
      const data = await res.json();
      
      if(data.elevation && data.elevation.length >= 2) {
@@ -3560,7 +3649,7 @@ async function elaboraConsiglioMeteo(lat, lon, locationName) {
 
   try {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode&timezone=Europe%2FRome`;
-    const r = await fetch(url); const d = await r.json();
+    const r = await fetchTimeout(url); const d = await r.json();
     const meteoDesc = WMO[d.current.weathercode] || 'Meteo variabile';
     const temp = Math.round(d.current.temperature_2m);
     const promptTesto = `Il meteo attuale a ${locationName} è: ${meteoDesc} con ${temp}°C. Suggerisci un programma dettagliato per la giornata basandoti ESCLUSIVAMENTE sull'app: ${getAppDati()}. Descrivi minuziosamente le 2-3 attività consigliate, spiegando perché sono ideali per questo specifico meteo e aggiungendo consigli pratici (es. cosa indossare, orari migliori). La risposta deve essere estesa e molto argomentata.`;
